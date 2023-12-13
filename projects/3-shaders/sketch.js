@@ -37,13 +37,13 @@ function setup() {
     }
 
     void main() {
-        vec2 uv = gl_FragCoord.xy/u_resolution.xy * 2.0 - 1.0;
+        vec2 uv = gl_FragCoord.xy/u_resolution.xy * 2.0 - 2.0;
         vec2 uv0 = uv;
         vec3 finalColor = vec3(0.0);
         
         uv.x *= u_resolution.x / u_resolution.y;
         
-        for (float i = 0.0; i < 3.0; i++) {
+        for (float i = 0.0; i < 2.0; i++) {
 
           uv = fract(uv * 1.5) - 0.5;
           
