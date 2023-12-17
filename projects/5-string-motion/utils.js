@@ -42,3 +42,11 @@ function offsetVectorList(baseVectorList, offsetList, falloff) {
 
   return resultVectors;
 }
+
+function checkCircleIntersection(circle1, circle2) {
+  const distance = dist(circle1.x, circle1.y, circle2.x, circle2.y);
+  const radiiSum = circle1.radius + circle2.radius;
+  const radiiDiff = abs(circle1.radius - circle2.radius);
+
+  return distance < radiiSum && distance > radiiDiff;
+}
