@@ -1,34 +1,44 @@
+const rowsNum = 10;
+const colsNum = 5;
+const circles = [];
+
 function setup() {
   createCanvas(600, 600);
-  background(21);
-  noLoop();
-  smooth();
-  strokeWeight(0.5);
+  angleMode(DEGREES);
+  frameRate(2);
+  const radius = width / rowsNum;
 
-  let yNoise = random(20);
+  const totalWidth = colsNum * radius;
+  const totalHeight = rowsNum * radius;
 
-  push();
-  translate(width / 2, height / 2);
-  noFill();
-  let centX = 0;
-  let centY = 0;
-  let radius = 200;
+  const centerX = width / 2 - totalWidth / 2;
+  const centerY = height / 2 - totalHeight / 2;
 
-  for (let ang = 0; ang <= 360 * 5; ang += 5) {
-    radius += 0.5;
-    yNoise += 0.5;
+  for (let i = 0; i < colsNum; i++) {
+    for (let j = 0; j < rowsNum; j++) {
+      const angle = random([0, 90, 180, 270]);
+      const end = random([90, 180, 270]);
 
-    let rad = radians(ang);
-    let x = centX + radius * cos(rad);
-    let y = centY + radius * sin(rad);
-    let x2 = centX + radius * cos(rad - random(0.5));
-    let y2 = centY + radius * sin(rad - random(0.5));
+      const x = i * radius + radius / 2 + centerX;
+      const y = j * radius + radius / 2 + centerY;
 
-    // stroke(200 - x, 200 - y, 200 - y * x);
-    stroke(255);
-    line(x, y, x2, y2);
-
-    radius -= noise(yNoise) * 3;
+      circles.push({ x, y, radius, angle, end });
+    }
   }
-  pop();
+}
+
+function draw() {
+  background(21);
+  stroke(255);
+
+  noStroke();
+  circles.forEach((circle) => {
+    const { x, y, radius, angle, end } = circle;
+    push();
+    translate(x, y);
+    rotate((frameCount * 45) / 2);
+    rotate(angle);
+    arc(0, 0, radius, radius, 0, end);
+    pop();
+  });
 }
