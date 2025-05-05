@@ -1,8 +1,8 @@
-let circles = [];
-let points = [];
-let word = "Jean";
+const shapes = [];
+const points = [];
+const word = "Jean";
+const size = 3;
 let textGraphic = null;
-let size = 2;
 
 function setupText(x, y, word, fontSize) {
   textGraphic = createGraphics(width, height);
@@ -29,25 +29,25 @@ function heart(x, y, size) {
   pop();
 }
 
-function newCircle() {
-  const randomCircle = random(points);
-  const { x, y } = randomCircle;
+function newShape() {
+  const randomShape = random(points);
+  const { x, y } = randomShape;
   let isValid = true;
 
-  for (let i = 0; i < circles.length; i++) {
-    const c = circles[i];
-    const d = dist(x, y, c.x, c.y);
+  for (let i = 0; i < shapes.length; i++) {
+    const s = shapes[i];
+    const d = dist(x, y, s.x, s.y);
 
-    if (d < c.r) {
+    if (d < s.r) {
       isValid = false;
       break;
     }
   }
 
-  return isValid ? new Circle(x, y, 1) : null;
+  return isValid ? new Shape(x, y, 1) : null;
 }
 
-class Circle {
+class Shape {
   constructor(x, y, r) {
     this.x = x;
     this.y = y;
@@ -58,10 +58,6 @@ class Circle {
   show() {
     fill(255, 0, 0);
     heart(this.x, this.y, this.r / 1.5);
-
-    // noFill();
-    // stroke(255);
-    // circle(this.x, this.y, this.r);
   }
 
   grow() {
@@ -72,10 +68,10 @@ class Circle {
 }
 
 function setup() {
-  createCanvas(600, 600);
+  createCanvas(800, 800);
   pixelDensity(devicePixelRatio * 3);
 
-  const pxs = setupText(width / 2, height / 2, word, 200);
+  const pxs = setupText(width / 2, height / 2, word, 160);
 
   for (let y = size; y < width; y += size) {
     for (let x = size; x < width; x += size) {
@@ -97,9 +93,9 @@ function draw() {
   let attempts = 0;
 
   while (count < total) {
-    const c = newCircle();
-    if (c !== null) {
-      circles.push(c);
+    const s = newShape();
+    if (s !== null) {
+      shapes.push(s);
       count++;
     }
     attempts++;
@@ -109,21 +105,21 @@ function draw() {
     }
   }
 
-  for (let i = 0; i < circles.length; i++) {
-    const c = circles[i];
-    if (c.isGrowing) {
-      for (let j = 0; j < circles.length; j++) {
-        const oc = circles[j];
+  for (let i = 0; i < shapes.length; i++) {
+    const s = shapes[i];
+    if (s.isGrowing) {
+      for (let j = 0; j < shapes.length; j++) {
+        const os = shapes[j];
         if (i !== j) {
-          const d = dist(c.x, c.y, oc.x, oc.y);
-          if (d - 2 < c.r + oc.r) {
-            c.isGrowing = false;
+          const d = dist(s.x, s.y, os.x, os.y);
+          if (d - 2 < s.r + os.r) {
+            s.isGrowing = false;
             break;
           }
         }
       }
     }
-    c.grow();
-    c.show();
+    s.grow();
+    s.show();
   }
 }
