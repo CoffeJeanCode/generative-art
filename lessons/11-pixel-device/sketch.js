@@ -3,18 +3,18 @@ const cnvHeight = 600;
 const resizeCnv = resized(cnvHeight, cnvHeight);
 
 function resized(width, height) {
-  return function (pixelRatio) {
+  return (pixelRatio) => {
     return [width * pixelRatio, height * pixelRatio];
   };
 }
 
-var s1 = function (sketch) {
-  sketch.setup = function () {
+const s1 = (sketch) => {
+  sketch.setup = () => {
     const [width, height] = resizeCnv(devicePixelRatio);
-    let canvas1 = sketch.createCanvas(width, height, sketch.WEBGL);
+    const canvas1 = sketch.createCanvas(width, height, sketch.WEBGL);
     canvas1.position(0, 0);
   };
-  sketch.draw = function () {
+  sketch.draw = () => {
     //for canvas 1
     sketch.background(100);
     sketch.rotateX(sketch.frameCount * 0.01);
@@ -22,7 +22,7 @@ var s1 = function (sketch) {
     sketch.cone(30, 50);
   };
 
-  sketch.windowResized = function () {
+  sketch.windowResized = () => {
     const [width, height] = resizeCnv(devicePixelRatio);
 
     resizeCanvas(width, height);
@@ -32,12 +32,12 @@ var s1 = function (sketch) {
 // create a new instance of p5 and pass in the function for sketch 1
 new p5(s1);
 
-var s2 = function (sketch) {
-  sketch.setup = function () {
-    let canvas2 = sketch.createCanvas(cnvWidth, cnvHeight, sketch.WEBGL);
+const s2 = (sketch) => {
+  sketch.setup = () => {
+    const canvas2 = sketch.createCanvas(cnvWidth, cnvHeight, sketch.WEBGL);
     canvas2.position(cnvWidth, 0);
   };
-  sketch.draw = function () {
+  sketch.draw = () => {
     //for canvas 2
     sketch.background(100);
     sketch.rotateX(sketch.frameCount * 0.01);

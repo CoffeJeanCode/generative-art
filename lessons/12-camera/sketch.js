@@ -29,14 +29,13 @@ function draw() {
 
   for (let y = 0; y < capture.height; y++) {
     for (let x = 0; x < capture.width; x++) {
-      let index = (x + y * capture.width) * 4;
-      let r = capture.pixels[index + 0];
-      let g = capture.pixels[index + 1];
-      let b = capture.pixels[index + 2];
-      let br = (r + g + b) / 3;
-
+      const index = (x + y * capture.width) * 4;
+      const r = capture.pixels[index + 0];
+      const g = capture.pixels[index + 1];
+      const b = capture.pixels[index + 2];
       const bright = (r + g + b) / 3;
       const size = map(bright, 0, 255, tileSize * 2, 0);
+
       push();
       fill(r, g, b);
       translate(x * tileSize, y * tileSize);
