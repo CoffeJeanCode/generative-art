@@ -1,4 +1,6 @@
-let xstart, xnoise, ynoise;
+let xstart;
+let noise;
+let ynoise;
 
 function setup() {
   createCanvas(600, 600, WEBGL);
@@ -35,9 +37,9 @@ function draw() {
 function drawSphere(x, y, noiseFactor) {
   push();
   translate(x, 250 - y, -y);
-  let sphereSize = noiseFactor * 35;
-  let grey = 150 + noiseFactor * 120;
-  let alph = 150 + noiseFactor * 120;
+  const sphereSize = noiseFactor * 35;
+  const grey = 150 + noiseFactor * 120;
+  const alph = 150 + noiseFactor * 120;
   fill(grey, alph);
   sphere(sphereSize);
   pop();

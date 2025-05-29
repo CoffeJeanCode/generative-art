@@ -21,6 +21,7 @@ function drawPoint(x, y, noiseFactor) {
   push();
   translate(x * noiseFactor * 4, y * noiseFactor * 4, -y);
   const edgeSize = noiseFactor * 26;
+  noStroke();
   ellipse(0, 0, edgeSize, edgeSize);
   pop();
 }
