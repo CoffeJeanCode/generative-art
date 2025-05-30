@@ -5,20 +5,20 @@ let palletes = [
 ];
 let colors = [];
 const curves = [];
+const MARGIN = 20;
 
 function setup() {
   createCanvas(600, 600);
-  // frameRate(2);
   noLoop();
   pixelDensity(4);
 
   colors = random(palletes);
 
-  for (let i = 0; i < random(1, 10); i++) {
+  for (let i = 0; i < random(3, 10); i++) {
     const coords = [];
     for (let j = 0; j < random(2, 7); j++) {
-      const x = random(20, width - 20) * sin(random());
-      const y = random(20, height - 20);
+      const x = random(MARGIN, width - MARGIN);
+      const y = random(MARGIN, height - MARGIN);
       coords.push({ x, y });
     }
     curves.push(coords);
@@ -30,31 +30,43 @@ function draw() {
   // curves
   noFill();
   for (let i = 0; i < curves.length; i++) {
-    const c = random(colors);
+    const col = random(colors);
     const currentCurve = curves[i];
-    strokeWeight(random(1, 8));
-    stroke(c);
+    strokeWeight(random(2, 6));
+    stroke(col);
+
     beginShape();
-    for (let j = 0; j < currentCurve.length; j++) {
-      const { x, y } = currentCurve[j];
+
+    for (let i = 0; i < currentCurve.length; i++) {
+      const { x, y } = currentCurve[i];
       if (random() > 0.5) curveVertex(x, y);
       else vertex(x, y);
     }
     const lastCoord = currentCurve[currentCurve.length - 1];
+    const nextLastCoord = currentCurve[currentCurve.length - 2];
+
+    const dxLast = lastCoord.x - nextLastCoord.x
+    const dyLast = lastCoord.y - nextLastCoord.y
+
     vertex(lastCoord.x, lastCoord.y);
-    const size = 10;
-    const angle = atan2(lastCoord.y, lastCoord.x);
     endShape();
+
+    const size = 10;
+    const angle = atan2(dxLast, dyLast);
+
+
     push();
-    fill(c);
-    noStroke();
     translate(lastCoord.x, lastCoord.y);
+
+    fill(col);
+    noStroke();
     rotate(angle);
     beginShape();
     vertex(size, -size);
     vertex(-size * 2, 0);
     vertex(size, size);
     endShape(CLOSE);
+
     pop();
   }
 }
